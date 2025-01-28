@@ -1,4 +1,6 @@
-﻿namespace Catalog.API.Products.GetProducts;
+﻿using Catalog.API.Models;
+
+namespace Catalog.API.Products.GetProducts;
 
 public record GetProductsQuery(): IQuery<GetProductsResult>;
 
@@ -11,6 +13,11 @@ internal class GetProductsQueryHandler(IDocumentSession session, ILogger<GetProd
         logger.LogInformation("GetProductsQueryHandler.Handle called with {@Query}", query);
     
         var products = await session.Query<Product>().ToListAsync(cancellationToken);
+
+        if (products == null || products.Count == 0)
+        {
+            throw new ProductNotFoundException();
+        }
 
         return new GetProductsResult(products);
     }
