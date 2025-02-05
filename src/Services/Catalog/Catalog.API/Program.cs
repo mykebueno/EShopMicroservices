@@ -4,14 +4,16 @@ using Catalog.API.Carter;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container
-builder.Services.AddCarter(new DependencyContextAssemblyCatalogCustom());
-
+var programAssembly = typeof(Program).Assembly;
 builder.Services.AddMediatR(config =>
 {
-    config.RegisterServicesFromAssembly(typeof(Program).Assembly);
+    config.RegisterServicesFromAssembly(programAssembly);
     config.AddOpenBehavior(typeof(ValidationBehaviour<,>));
 });
-builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
+builder.Services.AddValidatorsFromAssembly(programAssembly);
+
+builder.Services.AddCarter(new DependencyContextAssemblyCatalogCustom());
+
 builder.Services.AddMarten(opts =>
 {
     opts.Connection(builder.Configuration.GetConnectionString("Database")!);
