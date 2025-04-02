@@ -14,11 +14,6 @@ internal class GetProductsQueryHandler(IDocumentSession session, ILogger<GetProd
     
         var products = await session.Query<Product>().ToListAsync(cancellationToken);
 
-        if (products == null || products.Count == 0)
-        {
-            throw new ProductNotFoundException();
-        }
-
         return new GetProductsResult(products);
     }
 }
