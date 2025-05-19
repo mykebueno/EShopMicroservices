@@ -1,8 +1,8 @@
 ﻿namespace Catalog.API.Products.GetProducts;
 
-public record GetProductsRequest();
+public record GetProcutsRequest(int? PageNumber = 1, int? PageSize = 10);
 
-public record GetProductsResposne(
+public record GetProductsResponse(
         IEnumerable<Product> Products
     );
 
@@ -11,16 +11,18 @@ public class GetProductsEndpoint : ICarterModule
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app
-            .MapGet("products", async (ISender sender) =>
+            .MapGet("products", async ([AsParameters] GetProcutsRequest request, ISender sender) =>
             {
-                GetProductsResult result = await sender.Send(new GetProductsQuery());
+                GetProductsQuery query = request.Adapt<GetProductsQuery>();
 
-                GetProductsResposne response = result.Adapt<GetProductsResposne>();
+                GetProductsResult result = await sender.Send(query);
+
+                GetProductsResponse response = result.Adapt<GetProductsResponse>();
 
                 return Results.Ok(response);
             })
             .WithName("GetProducts")
-            .Produces<GetProductsResposne>(StatusCodes.Status200OK)
+            .Produces<GetProductsResponse>(StatusCodes.Status200OK)
             .Produces(StatusCodes.Status400BadRequest)
             .WithSummary("Get Products")
             .WithDescription("Get Products");

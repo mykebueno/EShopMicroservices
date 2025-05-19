@@ -29,7 +29,7 @@ public class UpdateProductEndpoint : ICarterModule
             return Results.Ok(response);
         })
         .WithName("UpdateProduct")
-        .Produces<GetProductsResposne>(StatusCodes.Status200OK)
+        .Produces<GetProductsResponse>(StatusCodes.Status200OK)
         .Produces(StatusCodes.Status400BadRequest)
         .Produces(StatusCodes.Status404NotFound)
         .WithSummary("Update Product")
