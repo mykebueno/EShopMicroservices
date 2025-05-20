@@ -1,6 +1,20 @@
-﻿namespace Basket.API.Data
+﻿
+namespace Basket.API.Data;
+
+public class BasketRepository : IBasketRepository
 {
-    public class BasketRepository
+    public Task<bool> DeleteBasket(string userName, CancellationToken cancellationToken = default)
     {
+        throw new NotImplementedException();
+    }
+
+    public Task<ShoppingCart> GetBasket(string userName, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<ShoppingCart> UpdateBasket(ShoppingCart cart, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
     }
 }
