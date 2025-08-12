@@ -43,7 +43,7 @@ public class CreateOrderHandler(IApplicationDbContext dbContext) : ICommandHandl
                     orderDto.Payment.CardName, 
                     orderDto.Payment.CardNumber, 
                     orderDto.Payment.Expiration, 
-                    orderDto.Payment.CVV, 
+                    orderDto.Payment.Cvv, 
                     orderDto.Payment.PaymentMethod)
         );
 
