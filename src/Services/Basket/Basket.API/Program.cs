@@ -1,6 +1,8 @@
+using System.Reflection;
 using Basket.API.Carter;
 using BuildingBlocks.Behaviours;
 using BuildingBlocks.Exceptions.Handler;
+using BuildingBlocks.Messaging.MassTransit;
 using Discount.Grpc;
 using HealthChecks.UI.Client;
 
@@ -51,6 +53,9 @@ builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(
 
     return handler;
 }); 
+
+// Async Communication Services
+builder.Services.AddMessageBroker(builder.Configuration);
 
 // Cross Cutting Services
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
